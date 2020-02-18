@@ -14,9 +14,9 @@ username = input("Type your nickname: ")
 server.send(username.encode('utf-8'))
 # Receives server answer
 modifiedSentence = server.recv(1024)
-print(modifiedSentence.decode('utf-8'))
 print("To send private messages the format goes '/pm name message'")
 print("To change channels type /Join channelname")
+print(modifiedSentence.decode('utf-8'))
 while True:
 
     # maintains a list of possible input streams
@@ -38,7 +38,6 @@ while True:
             message = socks.recv(1024)  # buffer size
             print(message.decode('utf-8'))
         else:
-
             message = input()
             if message != "exit":
                 server.send(message.encode('utf-8'))

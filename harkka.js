@@ -39,10 +39,11 @@ server.on("connection", function(socket) {
   socket.on("data", function(data) {
     if (!connectedSockets.has(socket)) {
       socket.name = data;
-      socket.channel = "/1";
-      socket.write("Welcome to the server " + socket.name + "!");
+
+      socket.write("Welcome to the server " + socket.name + "!\n");
       connectedSockets.add(socket);
-      connectedSockets.broadcast("Has joined chat.", socket);
+      connectedSockets.changeChannel(socket, "all");
+      connectedSockets.broadcast("Has joined channel.", socket);
     } else {
       if (data[0] === "/") {
         //COMMAND TIME
@@ -62,6 +63,7 @@ server.on("connection", function(socket) {
           console.log("Hello");
           console.log(data.split(" ")[1]);
           connectedSockets.changeChannel(socket, data.split(" ")[1]);
+          connectedSockets.broadcast("Has joined chat.", socket);
         }
       } else {
         //NORMALLY BROADCAST DATA TO other SOCKETS
